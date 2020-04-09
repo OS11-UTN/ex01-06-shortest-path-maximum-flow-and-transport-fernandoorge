@@ -1,50 +1,50 @@
 ##############################################################################
-#	OS11 LOGISTICS
-#	Author: Orge, Fernando Gabriel
-#	EX2
-#		Basic Example of Shortest Path Problem
-#		with different algorithms
+#   OS11 LOGISTICS
+#   Author: Orge, Fernando Gabriel
+#   EX2
+#       Basic Example of Shortest Path Problem
+#       with different algorithms
 #
-#	Solution:
-#		This new graph has the same NN matrix as the previous one, hence,
-#		it can be model as follows
-# 		NN = np.array( [[0, 1, 1, 0, 0, 0],
-#               		[0, 0, 0, 1, 0, 1],
-#               		[0, 0, 0, 0, 1, 0],
-#               		[0, 0, 0, 0, 0, 1],
-#               		[0, 0, 0, 0, 0, 1],
-#              	 		[0, 0, 0, 0, 0, 0]])
+#   Solution:
+#       This new graph has the same NN matrix as the previous one, hence,
+#       it can be model as follows
+#       NN = np.array( [[0, 1, 1, 0, 0, 0],
+#                       [0, 0, 0, 1, 0, 1],
+#                       [0, 0, 0, 0, 1, 0],
+#                       [0, 0, 0, 0, 0, 1],
+#                       [0, 0, 0, 0, 0, 1],
+#                       [0, 0, 0, 0, 0, 0]])
 #
-#		However the Cost Vector is now equal to
-#			C = [2,1,2,5,2,1,2] 	the cost of each arc
+#       However the Cost Vector is now equal to
+#           C = [2,1,2,5,2,1,2] 	the cost of each arc
 #
-#		The X vector (decision vars) is the same
-#			X = [x1,x2,...,xn]  	binary decision of taking xi path
+#       The X vector (decision vars) is the same
+#           X = [x1,x2,...,xn]  	binary decision of taking xi path
 #
-#		and the RHS of the equation is also the same
-#			b = [1,0,0,0,0,0,-1]	an imaginary load will be moved 
+#       and the RHS of the equation is also the same
+#           b = [1,0,0,0,0,0,-1]	an imaginary load will be moved 
 #									from node s to node t
-#			A = is the node-arc matrix obtained from the node-node one
+#           A = is the node-arc matrix obtained from the node-node one
 #
 #       Relevant notes:
 #           the interior-point method is not able to find a solution.
 #           the simplex algorithm gives us the optimal solution.
 #
 ##############################################################################
-import numpy     	as 		np
-from basic_utils 	import 	nn2na, get_selected_arcs
-from scipy.optimize import 	linprog
+import numpy        as      np
+from basic_utils    import  nn2na, get_selected_arcs
+from scipy.Optimize import  linprog
 
-NN 				= np.array([[0, 1, 1, 0, 0, 0],
-                			[0, 0, 0, 1, 0, 1],
-                			[0, 0, 0, 0, 1, 0],
-                			[0, 0, 0, 0, 0, 1],
-                			[0, 0, 0, 0, 0, 1],
-                			[0, 0, 0, 0, 0, 0]])
-C      			= np.array([2, 1, 2, 5, 2, 1, 2])
-Aeq, arc_idxs	= nn2na(NN)
-beq    			= np.array([1, 0, 0, 0, 0, -1])
-bounds 			= tuple([(0, None) for arcs in range(0, Aeq.shape[1])])
+NN              = np.array([[0, 1, 1, 0, 0, 0],
+                            [0, 0, 0, 1, 0, 1],
+                            [0, 0, 0, 0, 1, 0],
+                            [0, 0, 0, 0, 0, 1],
+                            [0, 0, 0, 0, 0, 1],
+                            [0, 0, 0, 0, 0, 0]])
+C               = np.array([2, 1, 2, 5, 2, 1, 2])
+Aeq, arc_idxs   = nn2na(NN)
+beq             = np.array([1, 0, 0, 0, 0, -1])
+bounds          = tuple([(0, None) for arcs in range(0, Aeq.shape[1])])
 
 print('## Optimizer inputs ## \n'
       'Cost vector                   :   %s \n'
