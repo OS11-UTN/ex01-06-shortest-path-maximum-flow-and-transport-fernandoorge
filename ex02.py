@@ -23,7 +23,7 @@
 #
 #       and the RHS of the equation is also the same
 #           b = [1,0,0,0,0,0,-1]	an imaginary load will be moved 
-#									from node s to node t
+#                                   from node s to node t
 #           A = is the node-arc matrix obtained from the node-node one
 #
 #       Relevant notes:
@@ -33,7 +33,7 @@
 ##############################################################################
 import numpy        as      np
 from basic_utils    import  nn2na, get_selected_arcs
-from scipy.Optimize import  linprog
+from scipy.optimize import  linprog
 
 NN              = np.array([[0, 1, 1, 0, 0, 0],
                             [0, 0, 0, 1, 0, 1],
