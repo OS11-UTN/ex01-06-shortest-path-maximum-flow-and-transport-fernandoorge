@@ -198,12 +198,3 @@ def ford_fulk(G, s, t):
             fbG[path[k+1], path[k]]  -= maxc
         path = dfs(resG, s, t)
     return flow, fbG
-#     
-# 
-# def get_path_as_string(arcs, vec):
-#     msg = ''
-#     for k in range(0, len(arcs)):
-#         if vec[k] == 1:
-#             msg = msg + '(' + arcs[k] + ')'
-#     return msg
-#     

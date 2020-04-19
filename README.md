@@ -100,10 +100,17 @@ Search a path between ['s', 't'] using DFS algorithm
 ```
 
 ##### Ford-Fulkerson Algorithm
-* **DFS** algorithm can be found at **logistics.py**.
+
+* **FF** algorithm can be found at **logistics.py**.
 * In order to test FF algorithm, the max flow was calculated for graphs in ex02, ex03 y ex05
 * Maximum flow solution for graph in EX05 = 5
 * Maximum flow solution for graph in EX05 = 3
 * Maximum flow solution for graph in EX05 = 4
 
 ### Solution to exercise 06
+
+* The raw solution will be: [10.  0.  0. 20. 15.  0.]
+* 10 units must be moved across ('1', 'a') arc.
+* 20 units must be moved across ('2', 'b') arc.
+* 15 units must be moved across ('3', 'a') arc.
+* The minimum cost will be: 450.00

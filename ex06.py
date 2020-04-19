@@ -74,7 +74,7 @@ NN = np.array([[0, 0, 0, 1, 1],
                [0, 0, 0, 0, 0],
                [0, 0, 0, 0, 0]])
                
-NA, arcs = lg.nn2na(NN, nodes) 
+NA, arcs = lg.nn2na(NN) 
 c = np.array([  10,   20,   10,   10,   10,   30])
 u = np.array([None, None, None, None, None, None])
 l = np.array([   0,    0,    0,    0,    0,    0])
@@ -99,7 +99,9 @@ print('\t OPTIMIZER INPUTS                         \n'
 print('\n SOLVING PROBLEM WITH SIMPLEX')
 res = linprog(C, A_eq=Aeq, b_eq=beq, bounds=bounds, method='simplex')
 print('\t Solution to the problem:')
-print('\t   The raw solution will be: %s' % res.x)
-for k in range(0, len(arcs)):
-    print('\t       %2d units will be moved across %s arc' % (res.x[k], arcs[k]))
+print('\t     The raw solution will be: %s' % res.x)
+for k in range(0, len(res.x)):
+    if res.x[k] > 0:
+        print('\t\t %d units must be moved across %s arc.' 
+            % (res.x[k], str(lg.convert_arc(arcs[k], nodes))))
 print('\t   The minimum cost will be: %0.2f ' % res.fun)
