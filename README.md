@@ -104,8 +104,8 @@ Search a path between ['s', 't'] using DFS algorithm
 * **FF** algorithm can be found at **logistics.py**.
 * In order to test FF algorithm, the max flow was calculated for graphs in ex02, ex03 y ex05
 * Maximum flow solution for graph in EX05 = 5
-* Maximum flow solution for graph in EX05 = 3
-* Maximum flow solution for graph in EX05 = 4
+* Maximum flow solution for graph in EX02 = 3
+* Maximum flow solution for graph in EX03 = 4
 
 ### Solution to exercise 06
 
