@@ -37,6 +37,16 @@ Hence,
 
 ### Solution to exercise 02
 
+* SOLVING PROBLEM WITH: interior-point
+  * The interior-point method is not able to find a solution.
+* SOLVING PROBLEM WITH: simplex
+  * The simplex algorithm gives us the optimal solution.
+  * The raw solution will be: [0. 1. 0. 0. 1. 0. 1.]
+  * Arc ('s', '3') must be taken.
+  * Arc ('3', '5') must be taken.
+  * Arc ('5', 't') must be taken.
+  * The minimum cost will be: 5.00. 
+
 ### Solution to exercise 03
 
 ### Solution to exercise 04
