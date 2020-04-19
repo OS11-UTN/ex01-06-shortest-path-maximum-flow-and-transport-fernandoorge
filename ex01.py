@@ -25,21 +25,29 @@
 #           b = [1,0,0,0,0,0,-1]	an imaginary load will be moved 
 #                                   from node s to node t
 #           A = is the node-arc matrix obtained from the node-node one
+#
+#   Results:
+#       The raw solution will be: [1. 0. 1. 0. 0. 1. 0.]
+#           Arc ('s', '2') must be taken.
+#           Arc ('2', '4') must be taken.
+#           Arc ('4', 't') must be taken.
+#       The minimum cost will be: 5.00 
 ##############################################################################
 import numpy     	as 		np
-from basic_utils 	import 	nn2na, get_selected_arcs
+import logistics    as      lg
 from scipy.optimize import 	linprog
 
-NN              = np.array([[0, 1, 1, 0, 0, 0],
-                            [0, 0, 0, 1, 0, 1],
-                            [0, 0, 0, 0, 1, 0],
-                            [0, 0, 0, 0, 0, 1],
-                            [0, 0, 0, 0, 0, 1],
-                            [0, 0, 0, 0, 0, 0]])
-C               = np.array([2, 2, 2, 5, 2, 1, 2])
-Aeq, arc_idxs   = nn2na(NN)
-beq             = np.array([1, 0, 0, 0, 0, -1])
-bounds          = tuple([(0, None) for arcs in range(0, Aeq.shape[1])])
+nodes     = ['s','2','3','4','5','t']
+NN        = np.array([[0, 1, 1, 0, 0, 0],
+                      [0, 0, 0, 1, 0, 1],
+                      [0, 0, 0, 0, 1, 0],
+                      [0, 0, 0, 0, 0, 1],
+                      [0, 0, 0, 0, 0, 1],
+                      [0, 0, 0, 0, 0, 0]])
+C         = np.array([2, 2, 2, 5, 2, 1, 2])
+Aeq, arcs = lg.nn2na(NN)
+beq       = np.array([1, 0, 0, 0, 0, -1])
+bounds    = tuple([(0, None) for arcs in range(0, Aeq.shape[1])])
 
 print('## Optimizer inputs ## \n'
       'Cost vector                   :   %s \n'
@@ -48,12 +56,13 @@ print('## Optimizer inputs ## \n'
       'Bounds of each X arc variable :   %s \n' % (C, Aeq, beq, bounds))
 
 # OPTIMIZE:
-res = linprog(C, A_eq=Aeq, b_eq=beq, bounds=bounds)
+res = linprog(C, A_eq=Aeq, b_eq=beq, bounds=bounds, method='simplex')
 print(res)
 
 # GET THE SOLUTION:
-selarcs = get_selected_arcs(arc_idxs, res.x)
 print('## Results ##')
 print('The raw solution will be: %s' % res.x)
-print('The arcs that make the shortest path will be (from, to): %s' % selarcs)
-print('The minimum cost will be: %0.2f ' % res.fun)
+for k in range(0, len(res.x)):
+    if res.x[k] == 1:
+        print('    Arc %s must be taken.' % str(lg.convert_arc(arcs[k], nodes)))
+print('The minimum cost will be: %0.2f. ' % res.fun)

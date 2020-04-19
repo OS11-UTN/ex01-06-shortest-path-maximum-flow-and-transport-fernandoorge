@@ -28,6 +28,13 @@ Each exercise of the assignment is solved in a different file
 
 ### Solution to exercise 01
 
+The raw solution will be: [1. 0. 1. 0. 0. 1. 0.]
+Hence, 
+* Arc ('s', '2') must be taken.
+* Arc ('2', '4') must be taken.
+* Arc ('4', 't') must be taken.
+* The minimum cost will be: 5.00 .
+
 ### Solution to exercise 02
 
 ### Solution to exercise 03

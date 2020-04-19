@@ -42,8 +42,8 @@ def nn2na(NN):
     for i in range (0, row):
         for j in range (0, col):
             if (NN[i,j] == 1):
-                NA[i,k] = +NN[i,j]
-                NA[j,k] = -NN[i,j]
+                NA[i,k] = +1
+                NA[j,k] = -1
                 k       = k + 1
                 arcs.append((i, j))
     return NA, arcs
