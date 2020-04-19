@@ -137,6 +137,67 @@ def dijkstra_alg(NN, nodes):
     print("\t Minimum distance      : %d" % cum_dist[-1])
     print("")
     
+def dfs(G, i, j):
+    """Return a path from i to j in G if at least one path exists."""
+    # Input  : G        Graph               as Node-Node Matrix
+    # Input  : i        source node         as INTEGER value
+    # Input  : j        destination node    as INTEGER value
+    # Output : path     found path          as LIST of INTEGERS
+    (row, col) = G.shape
+    label = [ 0 for col in range(row)]
+    pred  = [-1 for col in range(row)]
+    path  = []
+    s     = []
+    s.insert(0,i)
+    while (len(s) != 0):
+        v = s.pop()
+        if (label[v] == 0):
+            label[v] = 1
+            for arc in get_arcs_from_node(G, v):
+                pred[arc[1]] = v
+                s.insert(0,arc[1])
+    if (label[j] != 0):
+        path.insert(0, j)
+        while (label[j] == 1 and pred[j] >= 0):
+            j = pred[j]
+            path.insert(0, j)
+    return path
+    
+def max_flow_across_path(path, G):
+    """Return the maximum flow across any given path in G"""
+    # Input  : path     path                as LIST of INTEGERS
+    # Input  : G        Graph               as Node-Node Matrix
+    # Output : flow     maximum flow        as INTEGER value
+    # Notes  : The maximum flow across a path is equal to the minimum cost of 
+    #          all the arcs, since the arc with the minimun cost is the cut.
+    c = []
+    for k in range(0, len(path)-1):
+        i = path[k]
+        j = path[k+1]
+        c.append(G[i,j])
+    return min(c)
+    
+def ford_fulk(G, s, t):
+    """Return max flow across s->t in G using Ford-Fulkerson Algorithm."""
+    # Input  : G        Graph               as Node-Node Matrix
+    # Input  : s        source node         as INTEGER value
+    # Input  : t        destination node    as INTEGER value
+    # Output : flow     maximum flow        as INTEGER value
+    # Output : fbG      Feedback G          as Node-Node Matrix
+    #                                       it can be used to reconstruct the 
+    #                                       paths that determines the max flow
+    resG = G
+    fbG  = np.zeros(G.shape)
+    path = dfs(G, s, t)
+    flow = 0
+    while (path != []):
+        maxc = max_flow_across_path(path, resG)
+        flow += maxc
+        for k in range(0, len(path)-1):
+            resG[path[k], path[k+1]] -= maxc
+            fbG[path[k+1], path[k]]  -= maxc
+        path = dfs(resG, s, t)
+    return flow, fbG
 #     
 # 
 # def get_path_as_string(arcs, vec):
@@ -146,83 +207,3 @@ def dijkstra_alg(NN, nodes):
 #             msg = msg + '(' + arcs[k] + ')'
 #     return msg
 #     
-# def dfs(G, i, j):
-#     """."""
-#     (row, col) = G.shape
-#     label = [ 0 for col in range(row)]
-#     pred  = [-1 for col in range(row)]
-#     path  = []
-#     s     = []
-#     s.insert(0,i)
-#     while (len(s) != 0):
-#         v = s.pop()
-#         if (label[v] == 0):
-#             label[v] = 1
-#             for arc in get_arcs_from_node(G, v):
-#                 pred[arc[1]] = v
-#                 s.insert(0,arc[1])
-#     if (label[j] == 0):
-#         print('\tERROR: Path not found!')
-#     else:
-#         path.insert(0, j)
-#         while (label[j] == 1 and pred[j] >= 0):
-#             j = pred[j]
-#             path.insert(0, j)
-#     return path
-# 
-# # def dfs_at_na(NA, i, j):
-# #     """."""
-# #     (nodes, arcs) = NA.shape
-# #     label = [ 0 for col in range(nodes)]
-# #     pred  = [-1 for col in range(nodes)]
-# #     path  = []
-# #     s     = []
-# #     s.insert(0,i)
-# #     while (len(s) != 0):
-# #         v = s.pop()
-# #         if (label[v] == 0):
-# #             label[v] = 1
-# #             for arc in range(0, arcs):
-# #                 if NA[v, arc] > 0:
-# #                     pred[arc] = v
-# #                     s.insert(0,arc)
-# #     if (label[j] == 0):
-# #         print('\tERROR: Path not found!')
-# #     else:
-# #         path.insert(0, j)
-# #         while (label[j] == 1 and pred[j] >= 0):
-# #             j = pred[j]
-# #             path.insert(0, j)
-# #     return path
-# 
-# def residualg(G):
-#     (row, col) = G.shape
-#     for i in range(0, row):
-#         for j in range(0, col):
-#             if G[i,j] < 0:
-#                 G[i,j] = 0
-#     return G
-# 
-# def max_flow_across_path(path, G):
-#     """@TODO"""
-#     c = []
-#     for k in range(0, len(path)-1):
-#         i = path[k]
-#         j = path[k+1]
-#         c.append(G[i,j])
-#     return min(c)
-# 
-# def nn2nac(NN, nodes, costs):
-#     """@TODO"""
-#     NA, arcs = nn2na(NN, nodes)
-#     NAC = na2nac(NA, costs)
-#     return NAC
-# 
-# def na2nac(NA, costs):
-#     """@TODO"""
-#     (row, col) = NA.shape
-#     NAC        = np.zeros((row, col))
-#     for i in range (0, row):
-#         for j in range (0, col):
-#             NAC[i,j] = NA[i,j] * costs[j]
-#     return NAC

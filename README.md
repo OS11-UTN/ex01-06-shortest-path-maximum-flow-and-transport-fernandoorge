@@ -78,4 +78,32 @@ The raw solution will be: [4. 1. 1. 3. 1. 1. 1.]
 
 ### Solution to exercise 05
 
+##### DFS Algorithm
+* **DFS** algorithm can be found at **logistics.py**.
+* In order to test the DFS algorithm, I took all nodes permutations and execute DFS for each pair of nodes in G. 
+* Some sample solutions can be found below:
+```
+Search a path between ['s', '2'] using DFS algorithm
+    The path found was = ['s', '2']
+
+Search a path between ['s', '3'] using DFS algorithm
+    The path found was = ['s', '3']
+
+Search a path between ['s', '4'] using DFS algorithm
+    The path found was = ['s', '2', '4']
+
+Search a path between ['s', '5'] using DFS algorithm
+    The path found was = ['s', '3', '5']
+
+Search a path between ['s', 't'] using DFS algorithm
+    The path found was = ['s', '3', '5', 't']
+```
+
+##### Ford-Fulkerson Algorithm
+* **DFS** algorithm can be found at **logistics.py**.
+* In order to test FF algorithm, the max flow was calculated for graphs in ex02, ex03 y ex05
+* Maximum flow solution for graph in EX05 = 5
+* Maximum flow solution for graph in EX05 = 3
+* Maximum flow solution for graph in EX05 = 4
+
 ### Solution to exercise 06
