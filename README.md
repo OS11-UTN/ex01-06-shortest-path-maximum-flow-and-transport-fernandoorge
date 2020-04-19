@@ -66,6 +66,16 @@ Hence,
 
 ### Solution to exercise 04
 
+The maximum flow will be: 5.00 
+The raw solution will be: [4. 1. 1. 3. 1. 1. 1.]
+* 4 units must be moved across ('s', '2') arc.
+* 1 units must be moved across ('s', '3') arc.
+* 1 units must be moved across ('2', '4') arc.
+* 3 units must be moved across ('2', 't') arc.
+* 1 units must be moved across ('3', '5') arc.
+* 1 units must be moved across ('4', 't') arc.
+* 1 units must be moved across ('5', 't') arc.
+
 ### Solution to exercise 05
 
 ### Solution to exercise 06

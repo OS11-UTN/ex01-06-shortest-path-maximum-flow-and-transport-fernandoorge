@@ -66,7 +66,7 @@ NN = np.array([[0, 1, 1, 0, 0, 0],
                [0, 0, 0, 0, 0, 1],
                [1, 0, 0, 0, 0, 0]])
                
-NA, arcs = lg.nn2na(NN, nodes) 
+NA, arcs = lg.nn2na(NN) 
 c = np.array([0, 0, 0, 0, 0, 0, 0,  -1])
 u = np.array([7, 1, 2, 3, 2, 1, 2, 100])
 l = np.array([0, 0, 0, 0, 0, 0, 0,   0])
@@ -88,9 +88,15 @@ print('\t OPTIMIZER INPUTS                         \n'
       '\t     b_eq demand-supply vector     :   %s \n'
       '\t     Bounds of each X arc variable :   %s \n' % (C, Aeq, beq, bounds))
 
-for name_method in 'interior-point', 'simplex':
-    print('\n SOLVING PROBLEM WITH: %s' % name_method)
-    res = linprog(C, A_eq=Aeq, b_eq=beq, bounds=bounds, method=name_method)
-    print('\t Solution to the problem:')
-    print('\t   The raw solution will be: %s' % res.x)
-    print('\t   The minimum cost will be: %0.2f ' % res.fun)
+name_method = 'simplex'
+print('\n*****************************************************************')
+print('\t SOLVING PROBLEM WITH: %s' % name_method)
+res = linprog(C, A_eq=Aeq, b_eq=beq, bounds=bounds, method=name_method)
+print('\t Solution to the problem:')
+print('\t   The raw solution will be: %s' % res.x)
+for k in range(0, len(res.x)):
+    if res.x[k] > 0:
+        print('\t\t %d units must be moved across %s arc.' 
+            % (res.x[k], str(lg.convert_arc(arcs[k], nodes))))
+print('\t   The maximum flow will be: %0.2f ' % abs(res.fun))
+print('*****************************************************************\n')

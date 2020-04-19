@@ -73,6 +73,18 @@ def convert_path(path, nodes):
         cpath.append(nodes[path[k]])
     return cpath
     
+def get_arcs_from_node(G, src):
+    """Return a list of outcoming arcs from src node in G."""
+    # Input  : G        Graph modeled as Node-Node Matrix
+    # Input  : src      Source Node as INTEGER value
+    # Output : arcs     List of arcs as LIST of TUPLES
+    (row, col) = G.shape
+    arcs = []
+    for dst in range(0, col):
+        if G[src, dst] > 0:
+            arcs.append((src, dst))
+    return arcs
+
 def dijkstra_alg(NN, nodes):
     """DIJKSTRA Algorithm"""
     # Input  : NN       Node-Node Matrix
@@ -125,54 +137,20 @@ def dijkstra_alg(NN, nodes):
     print("\t Minimum distance      : %d" % cum_dist[-1])
     print("")
     
-def get_arcs_from_node(NN, src):
-    """@TODO"""
-    # Inputs  : NN       Node-Node Matrix
-    #         : src
-    (row, col) = NN.shape
-    arcs = []
-    for dst in range(0, col):
-        if NN[src, dst] > 0:
-            arcs.append((src, dst))
-    return arcs
-    
-
-def get_path_as_string(arcs, vec):
-    msg = ''
-    for k in range(0, len(arcs)):
-        if vec[k] == 1:
-            msg = msg + '(' + arcs[k] + ')'
-    return msg
-    
-def dfs(G, i, j):
-    """."""
-    (row, col) = G.shape
-    label = [ 0 for col in range(row)]
-    pred  = [-1 for col in range(row)]
-    path  = []
-    s     = []
-    s.insert(0,i)
-    while (len(s) != 0):
-        v = s.pop()
-        if (label[v] == 0):
-            label[v] = 1
-            for arc in get_arcs_from_node(G, v):
-                pred[arc[1]] = v
-                s.insert(0,arc[1])
-    if (label[j] == 0):
-        print('\tERROR: Path not found!')
-    else:
-        path.insert(0, j)
-        while (label[j] == 1 and pred[j] >= 0):
-            j = pred[j]
-            path.insert(0, j)
-    return path
-
-# def dfs_at_na(NA, i, j):
+#     
+# 
+# def get_path_as_string(arcs, vec):
+#     msg = ''
+#     for k in range(0, len(arcs)):
+#         if vec[k] == 1:
+#             msg = msg + '(' + arcs[k] + ')'
+#     return msg
+#     
+# def dfs(G, i, j):
 #     """."""
-#     (nodes, arcs) = NA.shape
-#     label = [ 0 for col in range(nodes)]
-#     pred  = [-1 for col in range(nodes)]
+#     (row, col) = G.shape
+#     label = [ 0 for col in range(row)]
+#     pred  = [-1 for col in range(row)]
 #     path  = []
 #     s     = []
 #     s.insert(0,i)
@@ -180,10 +158,9 @@ def dfs(G, i, j):
 #         v = s.pop()
 #         if (label[v] == 0):
 #             label[v] = 1
-#             for arc in range(0, arcs):
-#                 if NA[v, arc] > 0:
-#                     pred[arc] = v
-#                     s.insert(0,arc)
+#             for arc in get_arcs_from_node(G, v):
+#                 pred[arc[1]] = v
+#                 s.insert(0,arc[1])
 #     if (label[j] == 0):
 #         print('\tERROR: Path not found!')
 #     else:
@@ -192,35 +169,60 @@ def dfs(G, i, j):
 #             j = pred[j]
 #             path.insert(0, j)
 #     return path
-
-def residualg(G):
-    (row, col) = G.shape
-    for i in range(0, row):
-        for j in range(0, col):
-            if G[i,j] < 0:
-                G[i,j] = 0
-    return G
-
-def max_flow_across_path(path, G):
-    """@TODO"""
-    c = []
-    for k in range(0, len(path)-1):
-        i = path[k]
-        j = path[k+1]
-        c.append(G[i,j])
-    return min(c)
-
-def nn2nac(NN, nodes, costs):
-    """@TODO"""
-    NA, arcs = nn2na(NN, nodes)
-    NAC = na2nac(NA, costs)
-    return NAC
-
-def na2nac(NA, costs):
-    """@TODO"""
-    (row, col) = NA.shape
-    NAC        = np.zeros((row, col))
-    for i in range (0, row):
-        for j in range (0, col):
-            NAC[i,j] = NA[i,j] * costs[j]
-    return NAC
+# 
+# # def dfs_at_na(NA, i, j):
+# #     """."""
+# #     (nodes, arcs) = NA.shape
+# #     label = [ 0 for col in range(nodes)]
+# #     pred  = [-1 for col in range(nodes)]
+# #     path  = []
+# #     s     = []
+# #     s.insert(0,i)
+# #     while (len(s) != 0):
+# #         v = s.pop()
+# #         if (label[v] == 0):
+# #             label[v] = 1
+# #             for arc in range(0, arcs):
+# #                 if NA[v, arc] > 0:
+# #                     pred[arc] = v
+# #                     s.insert(0,arc)
+# #     if (label[j] == 0):
+# #         print('\tERROR: Path not found!')
+# #     else:
+# #         path.insert(0, j)
+# #         while (label[j] == 1 and pred[j] >= 0):
+# #             j = pred[j]
+# #             path.insert(0, j)
+# #     return path
+# 
+# def residualg(G):
+#     (row, col) = G.shape
+#     for i in range(0, row):
+#         for j in range(0, col):
+#             if G[i,j] < 0:
+#                 G[i,j] = 0
+#     return G
+# 
+# def max_flow_across_path(path, G):
+#     """@TODO"""
+#     c = []
+#     for k in range(0, len(path)-1):
+#         i = path[k]
+#         j = path[k+1]
+#         c.append(G[i,j])
+#     return min(c)
+# 
+# def nn2nac(NN, nodes, costs):
+#     """@TODO"""
+#     NA, arcs = nn2na(NN, nodes)
+#     NAC = na2nac(NA, costs)
+#     return NAC
+# 
+# def na2nac(NA, costs):
+#     """@TODO"""
+#     (row, col) = NA.shape
+#     NAC        = np.zeros((row, col))
+#     for i in range (0, row):
+#         for j in range (0, col):
+#             NAC[i,j] = NA[i,j] * costs[j]
+#     return NAC
