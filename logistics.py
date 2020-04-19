@@ -73,22 +73,12 @@ def convert_path(path, nodes):
         cpath.append(nodes[path[k]])
     return cpath
     
-def get_arcs_from_node(NN, src):
-    """@TODO"""
-    # Inputs  : NN       Node-Node Matrix
-    #         : src
-    (row, col) = NN.shape
-    arcs = []
-    for dst in range(0, col):
-        if NN[src, dst] > 0:
-            arcs.append((src, dst))
-    return arcs
-
-
 def dijkstra_alg(NN, nodes):
     """DIJKSTRA Algorithm"""
-    # Inputs  : NN       Node-Node Matrix
-    #         : nodes    nodes names
+    # Input  : NN       Node-Node Matrix
+    # Input  : nodes    list of all nodes names in the graph
+    #                   Nodes are assumed to be string values
+    # NOTES  : This function prints all the results
     (row, col) = NN.shape                                   # get NN dimensions
     n          = len(nodes)                                 # n == row == col
     if (row != col):
@@ -134,6 +124,17 @@ def dijkstra_alg(NN, nodes):
     print("\t Cumulative distance   : %s" % cum_dist)
     print("\t Minimum distance      : %d" % cum_dist[-1])
     print("")
+    
+def get_arcs_from_node(NN, src):
+    """@TODO"""
+    # Inputs  : NN       Node-Node Matrix
+    #         : src
+    (row, col) = NN.shape
+    arcs = []
+    for dst in range(0, col):
+        if NN[src, dst] > 0:
+            arcs.append((src, dst))
+    return arcs
     
 
 def get_path_as_string(arcs, vec):

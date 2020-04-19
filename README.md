@@ -49,6 +49,21 @@ Hence,
 
 ### Solution to exercise 03
 
+* Dijkstra algorithm implementacion can be found at **logistics.py**.
+
+##### Solution to ex01 using DIJKSTRA
+
+* Shortest path solution: ['s', '2', '4', 't']
+* Cumulative distance   : [0.0, 2.0, 4.0, 5.0]
+* Minimum distance      : 5
+
+##### Solution to ex02 using DIJKSTRA
+
+* Shortest path solution: ['s', '3', '5', 't']
+* Cumulative distance   : [0.0, 1.0, 3.0, 5.0]
+* Minimum distance      : 5
+
+
 ### Solution to exercise 04
 
 ### Solution to exercise 05
