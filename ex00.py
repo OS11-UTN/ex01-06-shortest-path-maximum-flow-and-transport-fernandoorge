@@ -12,11 +12,17 @@
 ##############################################################################
 
 import numpy     as np
-import logistics as log
+import logistics as lg
 
-M =  np.array( [ [0, 1, 1, 0],
-                 [0, 0, 1, 0], 
-                 [0, 0, 0, 1], 
-                 [1, 0, 0, 0] ])
+nodes = ['s','2','3','t']
+M = np.array( [ [0, 1, 1, 0],
+                [0, 0, 1, 1], 
+                [0, 0, 0, 1], 
+                [1, 0, 0, 0] ])
 
-print(log.nn2na(M))
+NA, arcs = lg.nn2na(M)
+
+print('Node-Arc Matrix: \n%s\n' % NA)
+print('The following arcs were found:')
+for arc in arcs:
+	print('\tArc found: %s' % str(lg.convert_arc(arc, nodes)))
